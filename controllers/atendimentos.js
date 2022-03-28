@@ -1,3 +1,6 @@
+//importando a class Atendimento 
+const Atendimento = require('../models/atendimentos')
+
 //primeiro passo é exportar o módulo para comunicar com o outro arquivo index.js
 module.exports = app => {
     //vamos criar uma função para a rota / do GET
@@ -7,9 +10,9 @@ module.exports = app => {
     //adicionando entrada do método POST como requisição
     app.post('/atendimentos', (req, res) => {
         
-        console.log(req.body)
-        res.send('Você está na rota de atendimentos e está realizando um POST')
-    });
+        const atendimento = req.body
+
+        Atendimento.adiciona(atendimento)
+        res.send('POST Atendimento')
+    })
 }
-
-
