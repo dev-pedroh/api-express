@@ -4,7 +4,12 @@ module.exports = app => {
     //através da rota '/' receberemos a requisição do browser pelo 'req' e responderemos pelo 'res'
     //executará nossa função, o res.send envia a resposta passada
     app.get('/atendimentos', (req, res) => res.send('Você está na rota de atendimentos e está realizando um GET'));
-
+    //adicionando entrada do método POST como requisição
+    app.post('/atendimentos', (req, res) => {
+        
+        console.log(req.body)
+        res.send('Você está na rota de atendimentos e está realizando um POST')
+    });
 }
 
 

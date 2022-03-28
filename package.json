@@ -14,9 +14,11 @@
   "author": "dev-pedroh",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "body-parser": "^1.19.2",
     "consign": "^0.1.6",
     "nodemon": "^2.0.15"
   }
