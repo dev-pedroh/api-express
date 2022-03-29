@@ -54,11 +54,65 @@ class Atendimento {
                     res.status(400).json(erro)
                 } else {
                     //alterando o tipo da resposta positiva 201=Created
-                    res.status(201).json(resultados)
+                    res.status(201).json(atendimento)
                 }
             })
         }
     }
-}
+    //método que lista as informações da tabela atendimento
+    lista(res){
+        //instanciando a consulta da tabela na variavel sql
+        const sql = 'SELECT * FROM Atendimentos'
+        //executando módulo 
+        conexao.query(sql, (erro, resultados) => {
+            if (erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(200).json(resultados)
+            }
+        })
+    }
+    //método para listar somente as consultas por id
+    buscaPorId(id, res){
+        //instanciando consulta sql
+        const sql = `SELECT * FROM Atendimentos WHERE id=${id}`
+        //
+        conexao.query(sql, (erro, resultados) => {
+            const atendimento = resultados[0]
+            if(erro){
+                res.status(400).json(erro)
+            }else {
+                res.status(200).json(atendimento)
+            }
+        })
+    }
+    //método que atualiza valores na tabela 
+    altera(id, valores, res){
+        if(valores.data) {
+            valores.data = moment(valores.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss')
+        }
+        //instancia sintaxe sql na const
+        const sql = 'UPDATE Atendimentos SET ? WHERE id=?'
+        //como utilizamos ? na busca da tabela, para alterar passaremos os valores por array
+        conexao.query(sql, [valores, id], (erro, resultados) => {
+            if(erro){
+                res.status(400).json(erro)
+            } else {
+                res.status(200).json({...valores, id})
+            }
+        })
+    }
+    deleta(id, res){
+        const sql = 'DELETE FROM Atendimentos WHERE id=?'
+
+        conexao.query(sql, id, (erro, resultados) => {
+            if(erro){
+                res.status(400).json(erro)
+            } else {
+                res.status(200).json(id)
+            }
+        })
+    }
+}   
 
 module.exports = new Atendimento
